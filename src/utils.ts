@@ -38,6 +38,36 @@ export function buildTree(paths: string[]): TreeNode {
 
     return root;
 }
+
+export function findSubtree(root: TreeNode, routeFilter: string | RegExp): TreeNode[] {
+    const matches: TreeNode[] = [];
+
+    function traverse(node: TreeNode) {
+        // Check if this node matches the filter
+        let isMatch = false;
+        
+        if (typeof routeFilter === 'string') {
+            // Prefix matching: /admin matches /admin, /admin/users, etc.
+            isMatch = node.path === routeFilter || node.path.startsWith(routeFilter + '/');
+        } else {
+            // RegExp pattern matching
+            isMatch = routeFilter.test(node.path);
+        }
+
+        if (isMatch) {
+            matches.push(node);
+        }
+
+        // Traverse children
+        node.children.forEach(child => traverse(child));
+    }
+
+    // Start traversal from root's children
+    root.children.forEach(child => traverse(child));
+
+    return matches;
+}
+
 function sortTreeNodes(a: TreeNode, b: TreeNode): number {
     // Folders first, then files
     const aIsFolder = a.children.length > 0;

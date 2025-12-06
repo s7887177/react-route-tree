@@ -1,7 +1,7 @@
 {
   "name": "@hdai-eason/react-route-tree",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A generic React tree component for displaying routes",
   "main": "dist/index.js",
   "scripts": {
