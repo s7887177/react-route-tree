@@ -27,7 +27,7 @@ export function createRouteTree(options: CreateRouteTreeOptions) {
         return (
             <div className={className}>
                 {matchingNodes.map(node => (
-                    <TreeItem key={node.path} node={node} level={0} />
+                    <TreeItem key={node.path} node={node} level={0} defaultExpandLevel={effectiveExpandLevel} />
                 ))}
             </div>
         );

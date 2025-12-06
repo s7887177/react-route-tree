@@ -8,6 +8,7 @@ export type TreeNode = {
 export interface TreeItemProps {
     node: TreeNode;
     level?: number;
+    defaultExpandLevel?: number;
 }
 
 export interface CreateRouteTreeOptions {
