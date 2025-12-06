@@ -4,8 +4,9 @@ import { TreeItemToggle } from "./TreeItemToggle";
 import { DEFAULT_EXPAND_LEVEL } from "../const";
 import { TreeItemProps } from "../types";
 
-export function TreeItem({ node, level = 0 }: TreeItemProps) {
-    const [isOpen, setIsOpen] = useState(level < DEFAULT_EXPAND_LEVEL);
+export function TreeItem({ node, level = 0, defaultExpandLevel }: TreeItemProps) {
+    const expandLevel = defaultExpandLevel ?? DEFAULT_EXPAND_LEVEL;
+    const [isOpen, setIsOpen] = useState(level < expandLevel);
     const hasChildren = node.children.length > 0;
 
     const toggleOpen = () => {
@@ -28,7 +29,7 @@ export function TreeItem({ node, level = 0 }: TreeItemProps) {
             {hasChildren && isOpen && (
                 <div>
                     {node.children.map(child => (
-                        <TreeItem key={child.path} node={child} level={level + 1} />
+                        <TreeItem key={child.path} node={child} level={level + 1} defaultExpandLevel={defaultExpandLevel} />
                     ))}
                 </div>
             )}
