@@ -25,10 +25,9 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route="/admin" />
+        <RouteTree routeFilter="/admin" />
       </BrowserRouter>
     );
-    
     // Just verify admin routes are rendered
     expect(container.textContent).toContain('admin');
     expect(container.textContent).toContain('users');
@@ -41,7 +40,7 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route={/product/} />
+        <RouteTree routeFilter={/product/} />
       </BrowserRouter>
     );
     
@@ -60,7 +59,7 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route="/admin" />
+        <RouteTree routeFilter="/admin" />
       </BrowserRouter>
     );
     
@@ -76,7 +75,7 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route="/admin" defaultExpandLevel={2} />
+        <RouteTree routeFilter="/admin" defaultExpandLevel={2} />
       </BrowserRouter>
     );
     
@@ -96,8 +95,8 @@ describe('createRouteTree', () => {
     const { container } = render(
       <BrowserRouter>
         <div>
-          <AdminTree route="/admin" />
-          <ProductTree route="/product" />
+          <AdminTree routeFilter="/admin" />
+          <ProductTree routeFilter="/product" />
         </div>
       </BrowserRouter>
     );
@@ -114,7 +113,7 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route="/admin" className="custom-class" />
+        <RouteTree routeFilter="/admin" className="custom-class" />
       </BrowserRouter>
     );
     
@@ -127,7 +126,7 @@ describe('createRouteTree', () => {
     
     const { container } = render(
       <BrowserRouter>
-        <RouteTree route="/nonexistent" />
+        <RouteTree routeFilter="/nonexistent" />
       </BrowserRouter>
     );
     

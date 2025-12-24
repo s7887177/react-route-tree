@@ -4,31 +4,39 @@ import { buildTree, findSubtree } from "../utils";
 import { DEFAULT_EXPAND_LEVEL } from "../const";
 import { CreateRouteTreeOptions, RouteTreeComponentProps } from "../types";
 
+
+
 export function createRouteTree(options: CreateRouteTreeOptions) {
     const { routes, defaultExpandLevel } = options;
-    
+
     // Build tree eagerly at factory call time
-    const tree = buildTree(routes);
-    
+
     // Return memoized component
-    return function RouteTree({ 
-        route, 
+    return function RouteTree({
+        routeFilter,
         defaultExpandLevel: propExpandLevel,
-        className 
+        className
     }: RouteTreeComponentProps) {
         // Memoize filtering on route changes
-        const matchingNodes = useMemo(() => {
-            return findSubtree(tree, route);
-        }, [route]);
-        
+        const root = useMemo(() => {
+            const matchingRoutes = routes.filter(path => {
+                if (typeof routeFilter === 'string') {
+                    // Prefix matching: /admin matches /admin, /admin/users, etc.
+                    return path === routeFilter || path.startsWith(routeFilter + '/');
+                } else {
+                    // RegExp pattern matching
+                    return routeFilter.test(path);
+                }
+            });
+            return buildTree(matchingRoutes);
+        }, [routeFilter]);
+
         // Resolve effective expand level: component prop > factory option > global default
         const effectiveExpandLevel = propExpandLevel ?? defaultExpandLevel ?? DEFAULT_EXPAND_LEVEL;
-        
+
         return (
             <div className={className}>
-                {matchingNodes.map(node => (
-                    <TreeItem key={node.path} node={node} level={0} defaultExpandLevel={effectiveExpandLevel} />
-                ))}
+                <TreeItem node={root} defaultExpandLevel={effectiveExpandLevel}/>
             </div>
         );
     };

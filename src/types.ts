@@ -17,7 +17,7 @@ export interface CreateRouteTreeOptions {
 }
 
 export interface RouteTreeComponentProps {
-    route: string | RegExp;
+    routeFilter: string | RegExp;
     defaultExpandLevel?: number;
     className?: string;
 }
